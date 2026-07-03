@@ -1,0 +1,224 @@
+/* Reset some default spacing */
+*/* ===== RESET ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ===== BODY ===== */
+
+body{
+    background:#090d18;
+    color:white;
+
+    font-family:'Inter',sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+
+nav{
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:25px 70px;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    background:rgba(9,13,24,0.8);
+
+    backdrop-filter:blur(12px);
+
+}
+
+.logo{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    font-family:'Orbitron',sans-serif;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#56b4ff;
+
+}
+
+/* ===== HERO ===== */
+
+.hero{
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+}
+
+.brain{
+
+    font-size:80px;
+
+    margin-bottom:20px;
+
+    animation:float 3s ease-in-out infinite;
+
+}
+
+h1{
+
+    font-size:80px;
+
+    font-family:'Orbitron',sans-serif;
+
+}
+
+h2{
+
+    margin-top:15px;
+
+    color:#56b4ff;
+
+    font-size:42px;
+
+}
+
+p{
+
+    margin-top:35px;
+
+    font-size:24px;
+
+    line-height:1.8;
+
+    color:#d7d7d7;
+
+}
+
+/* ===== BUTTON ===== */
+
+button{
+
+    margin-top:45px;
+
+    padding:18px 40px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    background:#3b82f6;
+
+    color:white;
+
+    font-size:20px;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 0 25px #3b82f6;
+
+}
+
+/* ===== FLOATING BRAIN ===== */
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0px);
+
+}
+
+}
+/* ===== SMOOTH SCROLL ===== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===== CONTENT SECTIONS ===== */
+
+.section {
+    min-height: 100vh;
+    padding: 120px 10%;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.section h2 {
+    font-size: 48px;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', sans-serif;
+    color: #56b4ff;
+}
+
+.section p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 22px;
+    line-height: 1.8;
+}
