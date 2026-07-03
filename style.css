@@ -1494,3 +1494,146 @@ body.light p {
     50% { transform: translate(2px, -1px); }
     100% { transform: translate(-2px, 1px); }
 }
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width: 768px){
+
+    /* NAVBAR */
+
+    nav{
+        flex-direction:column;
+        gap:15px;
+        padding:18px 20px;
+    }
+
+    nav ul{
+        gap:18px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .logo{
+        font-size:1.6rem;
+    }
+
+    /* HERO */
+
+    .hero{
+        padding:120px 20px 60px;
+    }
+
+    h1{
+        font-size:3rem;
+    }
+
+    h2{
+        font-size:2rem;
+    }
+
+    p{
+        font-size:1rem;
+        line-height:1.8;
+    }
+
+    button{
+        width:100%;
+        max-width:320px;
+        font-size:1rem;
+        padding:16px;
+    }
+
+    /* BRAIN */
+
+    .brain,
+    .brain-svg{
+        width:180px;
+        height:180px;
+    }
+
+    /* SECTIONS */
+
+    .section{
+        padding:100px 25px;
+    }
+
+    /* SIGNAL */
+
+    .signal-container{
+        flex-direction:column;
+        gap:25px;
+    }
+
+    .signal{
+        width:180px;
+    }
+
+    .brain-icon,
+    .computer-icon{
+        font-size:3.5rem;
+    }
+
+    /* FLIP CARDS */
+
+    .cards{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .flip-card{
+        width:100%;
+        max-width:340px;
+    }
+
+    /* TIMELINE */
+
+    .timeline::before{
+        display:none;
+    }
+
+    .timeline-item{
+        width:100%;
+        left:0 !important;
+        text-align:left;
+        margin-bottom:40px;
+    }
+
+    .timeline-content{
+        width:100%;
+    }
+
+    /* ABOUT */
+
+    .about-card{
+        padding:30px 20px;
+    }
+
+    .contact-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .contact-btn{
+        width:100%;
+        max-width:280px;
+    }
+
+    /* AI BIAS */
+
+    .bias-box{
+        padding:25px;
+    }
+
+    input[type="range"]{
+        width:100%;
+    }
+
+    /* CURSOR EFFECTS */
+
+    .cursor-glow,
+    #cursorParticles{
+        display:none;
+    }
+
+}
