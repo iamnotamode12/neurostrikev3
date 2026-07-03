@@ -1,374 +1,288 @@
+// ===============================
+// START BUTTON SCROLL
+// ===============================
+
 const startButton = document.getElementById("startBtn");
 
-startButton.addEventListener("click", () => {
-    document.querySelector("#bcis").scrollIntoView({
-        behavior: "smooth"
+if (startButton) {
+    startButton.addEventListener("click", () => {
+        document.querySelector("#bcis")?.scrollIntoView({
+            behavior: "smooth"
+        });
     });
-});
+}
+
+// ===============================
+// SECTION OBSERVER
+// ===============================
 
 const sections = document.querySelectorAll(".section");
 
 const observer = new IntersectionObserver((entries) => {
-
     entries.forEach(entry => {
-
-        if(entry.isIntersecting){
-
+        if (entry.isIntersecting) {
             entry.target.classList.add("show");
-
         }
-
     });
-
 });
 
-sections.forEach(section => {
+sections.forEach(section => observer.observe(section));
 
-    observer.observe(section);
-
-});
 // ===============================
-// Flip Cards
+// FLIP CARDS
 // ===============================
 
-const cards = document.querySelectorAll(".flip-card");
-
-cards.forEach(card => {
-
+document.querySelectorAll(".flip-card").forEach(card => {
     card.addEventListener("click", () => {
-
         card.classList.toggle("flipped");
-
     });
-
 });
+
 // ===============================
-// AI Bias Simulator
+// AI BIAS SIMULATOR
 // ===============================
 
 const slider = document.getElementById("biasSlider");
 const accuracy = document.getElementById("accuracy");
 const biasText = document.getElementById("biasText");
 
-slider.addEventListener("input", () => {
+if (slider) {
+    slider.addEventListener("input", () => {
+        const value = Number(slider.value);
+        const score = Math.round(50 + value * 0.48);
 
-    const value = slider.value;
+        if (accuracy) accuracy.textContent = `Accuracy: ${score}%`;
 
-    const score = Math.round(50 + value * 0.48);
+        if (biasText) {
+            if (value > 80) {
+                biasText.textContent = "The model performs well because the training data is diverse.";
+            } else if (value > 50) {
+                biasText.textContent = "Diversity is dropping. Performance may vary.";
+            } else if (value > 25) {
+                biasText.textContent = "Bias is becoming noticeable due to underrepresentation.";
+            } else {
+                biasText.textContent = "Highly biased dataset. Predictions are unreliable.";
+            }
+        }
+    });
+}
 
-    accuracy.textContent = `Accuracy: ${score}%`;
-
-    if(value > 80){
-
-        biasText.textContent =
-        "The model performs well because the training data includes many different people.";
-
-    }
-
-    else if(value > 50){
-
-        biasText.textContent =
-        "The dataset is becoming less diverse. Performance may begin to vary between groups.";
-
-    }
-
-    else if(value > 25){
-
-        biasText.textContent =
-        "The AI is showing noticeable bias because many groups are underrepresented.";
-
-    }
-
-    else{
-
-        biasText.textContent =
-        "The dataset is highly biased. Predictions become much less reliable for many people.";
-
-    }
-
-});
 // ===============================
-// Timeline Progress
+// TIMELINE PROGRESS
 // ===============================
 
 const timeline = document.querySelector(".timeline");
 const progress = document.querySelector(".timeline-progress");
 
 window.addEventListener("scroll", () => {
+    if (!timeline || !progress) return;
 
     const rect = timeline.getBoundingClientRect();
-
     const windowHeight = window.innerHeight;
 
     const visible = windowHeight - rect.top;
-
     const total = rect.height;
 
     let percent = (visible / total) * 100;
-
-    percent = Math.max(0, Math.min(percent,100));
+    percent = Math.max(0, Math.min(percent, 100));
 
     progress.style.height = percent + "%";
-
 });
-// =====================================================
-// CURSOR GLOW + NEURAL DUST
-// =====================================================
+
+// ===============================
+// CURSOR GLOW + PARTICLES
+// ===============================
 
 const glow = document.querySelector(".cursor-glow");
+const particleCanvas = document.getElementById("cursorParticles");
 
-document.addEventListener("mousemove", (e) => {
+let pctx = null;
+let particles = [];
 
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
+if (particleCanvas) {
+    pctx = particleCanvas.getContext("2d");
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+}
 
-    createParticle(e.clientX, e.clientY);
+window.addEventListener("mousemove", (e) => {
+    if (glow) {
+        glow.style.left = e.clientX + "px";
+        glow.style.top = e.clientY + "px";
+    }
 
+    if (particles) {
+        particles.push({
+            x: e.clientX,
+            y: e.clientY,
+            size: Math.random() * 4 + 1,
+            life: 1
+        });
+    }
 });
 
-// =====================================================
-// CREATE PARTICLE
-// =====================================================
+function animateParticles() {
+    if (!pctx) return;
 
-function createParticle(x, y){
+    pctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
 
-    const particle = document.createElement("div");
+    particles.forEach(p => {
+        pctx.fillStyle = `rgba(86,180,255,${p.life})`;
+        pctx.beginPath();
+        pctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        pctx.fill();
 
-    particle.classList.add("particle");
+        p.life -= 0.02;
+        p.y -= 0.3;
+    });
 
-    // Random size
-    const size = Math.random() * 7 + 3;
+    particles = particles.filter(p => p.life > 0);
 
-    particle.style.width = size + "px";
-    particle.style.height = size + "px";
-
-    // Random position around cursor
-    const offsetX = (Math.random() - 0.5) * 25;
-    const offsetY = (Math.random() - 0.5) * 25;
-
-    particle.style.left = (x + offsetX) + "px";
-    particle.style.top = (y + offsetY) + "px";
-
-    // Random color
-    const colors = [
-        "#56b4ff",
-        "#8b5cf6",
-        "#ffffff"
-    ];
-
-    const color = colors[Math.floor(Math.random()*colors.length)];
-
-    particle.style.background = color;
-    particle.style.boxShadow = `0 0 12px ${color}`;
-
-    // Random lifetime
-
-    particle.style.animationDuration =
-        (0.8 + Math.random()*0.6) + "s";
-
-    document.body.appendChild(particle);
-
-    setTimeout(()=>{
-
-        particle.remove();
-
-    },1500);
-
+    requestAnimationFrame(animateParticles);
 }
-// =====================================================
-// DARK / LIGHT MODE
-// =====================================================
+
+animateParticles();
+
+// resize
+window.addEventListener("resize", () => {
+    if (!particleCanvas) return;
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+});
+
+// ===============================
+// THEME TOGGLE
+// ===============================
 
 const themeToggle = document.getElementById("themeToggle");
 
-themeToggle.addEventListener("click",()=>{
-
-    document.body.classList.toggle("light");
-
-    if(document.body.classList.contains("light")){
-
-        themeToggle.textContent="☀️";
-
-    }
-
-    else{
-
-        themeToggle.textContent="🌙";
-
-    }
-
-});
-// =====================================================
-// NEURAL NETWORK BACKGROUND
-// =====================================================
-
-const canvas = document.getElementById("network");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener("resize", () => {
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-});
-
-const nodes = [];
-
-const NODE_COUNT = 60;
-
-for(let i=0;i<NODE_COUNT;i++){
-
-    nodes.push({
-
-        x:Math.random()*canvas.width,
-
-        y:Math.random()*canvas.height,
-
-        dx:(Math.random()-.5)*0.5,
-
-        dy:(Math.random()-.5)*0.5,
-
-        r:2+Math.random()*2
-
+if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("light");
+        themeToggle.textContent =
+            document.body.classList.contains("light") ? "☀️" : "🌙";
     });
-
 }
+// ===============================
+// NEURAL NETWORK
+// ===============================
 
-function animateNetwork(){
+const networkCanvas = document.getElementById("network");
+const nctx = networkCanvas ? networkCanvas.getContext("2d") : null;
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+if (networkCanvas && nctx) {
 
-    // Draw connections
+    networkCanvas.width = window.innerWidth;
+    networkCanvas.height = window.innerHeight;
 
-    for(let i=0;i<nodes.length;i++){
+    const nodes = [];
+    const NODE_COUNT = 60;
 
-        for(let j=i+1;j<nodes.length;j++){
+    for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+            x: Math.random() * networkCanvas.width,
+            y: Math.random() * networkCanvas.height,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5,
+            r: 2 + Math.random() * 2
+        });
+    }
 
-            const dx = nodes[i].x - nodes[j].x;
-            const dy = nodes[i].y - nodes[j].y;
+    function animateNetwork() {
+        nctx.clearRect(0, 0, networkCanvas.width, networkCanvas.height);
 
-            const dist = Math.sqrt(dx*dx + dy*dy);
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
 
-            if(dist < 140){
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
 
-                ctx.beginPath();
-
-                ctx.strokeStyle =
-                "rgba(86,180,255," + (1-dist/140)*0.22 + ")";
-
-                ctx.moveTo(nodes[i].x,nodes[i].y);
-
-                ctx.lineTo(nodes[j].x,nodes[j].y);
-
-                ctx.stroke();
-
+                if (dist < 140) {
+                    nctx.beginPath();
+                    nctx.strokeStyle = `rgba(86,180,255,${(1 - dist / 140) * 0.22})`;
+                    nctx.moveTo(nodes[i].x, nodes[i].y);
+                    nctx.lineTo(nodes[j].x, nodes[j].y);
+                    nctx.stroke();
+                }
             }
-
         }
 
+        nodes.forEach(node => {
+            nctx.beginPath();
+            nctx.fillStyle = "#56b4ff";
+            nctx.shadowBlur = 12;
+            nctx.shadowColor = "#56b4ff";
+            nctx.arc(node.x, node.y, node.r, 0, Math.PI * 2);
+            nctx.fill();
+
+            node.x += node.dx;
+            node.y += node.dy;
+
+            if (node.x < 0 || node.x > networkCanvas.width) node.dx *= -1;
+            if (node.y < 0 || node.y > networkCanvas.height) node.dy *= -1;
+        });
+
+        requestAnimationFrame(animateNetwork);
     }
 
-    // Draw nodes
+    animateNetwork();
 
-    nodes.forEach(node=>{
-
-        ctx.beginPath();
-
-        ctx.fillStyle="#56b4ff";
-
-        ctx.shadowBlur=12;
-
-        ctx.shadowColor="#56b4ff";
-
-        ctx.arc(node.x,node.y,node.r,0,Math.PI*2);
-
-        ctx.fill();
-
-        node.x+=node.dx;
-        node.y+=node.dy;
-
-        if(node.x<0||node.x>canvas.width)
-            node.dx*=-1;
-
-        if(node.y<0||node.y>canvas.height)
-            node.dy*=-1;
-
+    window.addEventListener("resize", () => {
+        networkCanvas.width = window.innerWidth;
+        networkCanvas.height = window.innerHeight;
     });
-
-    requestAnimationFrame(animateNetwork);
-
 }
-
-animateNetwork();
-// =====================================================
-// LOADING SCREEN
-// =====================================================
+// ===============================
+// LOADER (ONLY ONCE)
+// ===============================
 
 const loader = document.getElementById("loader");
-
 const loadingText = document.getElementById("loadingText");
 
 const messages = [
-
     "Initializing Neural Network...",
-
     "Connecting Synapses...",
-
     "Loading AI Ethics Module...",
-
     "Preparing Brain-Computer Interface...",
-
     "Welcome to NeuroStrike."
-
 ];
 
-let messageIndex = 0;
+let index = 0;
 
-const textInterval = setInterval(()=>{
+if (loadingText) {
+    setInterval(() => {
+        index++;
+        if (index < messages.length) {
+            loadingText.textContent = messages[index];
+        }
+    }, 600);
+}
 
-    messageIndex++;
+window.addEventListener("load", () => {
+    if (!loader) return;
 
-    if(messageIndex < messages.length){
+    setTimeout(() => {
+        loader.style.opacity = "0";
+        loader.style.pointerEvents = "none";
 
-        loadingText.textContent = messages[messageIndex];
-
-    }
-
-},600);
-
-window.addEventListener("load",()=>{
-
-    setTimeout(()=>{
-
-        loader.style.opacity="0";
-
-        loader.style.pointerEvents="none";
-
-        clearInterval(textInterval);
-
-    },3000);
-
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 800);
+    }, 1500);
 });
-// =====================================
-// 3D Brain Tilt
-// =====================================
 
-const brain =
-document.querySelector(".brain-svg");
+// ===============================
+// 3D BRAIN TILT
+// ===============================
 
-document.addEventListener("mousemove",(e)=>{
+const brain = document.querySelector(".brain-svg");
 
-const x =
-(e.clientX/window.innerWidth-.5)*20;
+document.addEventListener("mousemove", (e) => {
+    if (!brain) return;
 
-const y =
-(e.clientY/window.innerHeight-.5)*20;
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
-brain.style.transform=
-`rotateY(${x}deg)
- rotateX(${-y}deg)`;
-
+    brain.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
 });
