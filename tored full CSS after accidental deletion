@@ -1,0 +1,47 @@
+[33mcommit 23abcb300d714d88ee68924707558ac3ed6486b0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 19:36:13 2026 +0530
+
+    rollback CSS to stable pre-clamp version
+
+[33mcommit 2565823e0688c754c7bfaadb82dc0676aaf19fd9[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 19:29:45 2026 +0530
+
+    update
+
+[33mcommit 6e239a6cd9d7d0cec740f71aa38840d4f217fc51[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 19:25:17 2026 +0530
+
+    NEUROSTRIKE v3 - CLEAN BUILD
+
+[33mcommit fafd36a1441d7759d0bc87b4f63d84206a846629[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 19:08:21 2026 +0530
+
+    Added tablet responsive layout
+
+[33mcommit 5a618929b895bad03e07c97b8e898d294f6b3cad[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 19:04:58 2026 +0530
+
+    Made website responsive for mobile
+
+[33mcommit d2eae9a15a66228901586b5858b9fe7ddf672acb[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 17:57:43 2026 +0530
+
+    Testing deployment
+
+[33mcommit 41e35bd2c2a97e21a589ee1d460765b6ea1c08cc[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 11:33:19 2026 +0530
+
+    Added interactive UI, timeline, loading screen, and neural animations
+
+[33mcommit ce57ad6bf6de0242ea99af7100e01daaeaeb9a80[m
+Author: Nero <iamnero6769@gmail.com>
+Date:   Fri Jul 3 10:04:40 2026 +0530
+
+    Initial NeuroStrike landing page
